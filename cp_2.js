@@ -1,31 +1,36 @@
 const API_URL = "https://www.course-api.com/javascript-store-products";
 
-function fetchProductsThen() {
-  fetch(API_URL)
-    .then((response) => response.json())
-    .then((products) => {
-      products.forEach((product) => {
-        console.log(product.fields.name);
-      });
-    })
-    .catch((error) => {
-      console.error("fetchProductsThen error:", error);
-    });
-}
-
-async function fetchProductsAsync() {
+// Fetch products from API with fallback to local data
+async function fetchProducts() {
   try {
+    showLoading(true);
     const response = await fetch(API_URL);
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
     const products = await response.json();
     displayProducts(products);
   } catch (error) {
+    console.error("Error fetching products:", error);
+    showError("Failed to load products from server. Showing cached products instead.");
     displayFallbackProducts();
+  } finally {
+    showLoading(false);
   }
 }
 
+// Display products from API in grid
 function displayProducts(products) {
   const container = document.querySelector("#product-container");
   container.innerHTML = "";
+  clearError();
+
+  if (products.length === 0) {
+    showError("No products available.");
+    return;
+  }
 
   products.slice(0, 5).forEach((product) => {
     const { name, price, image } = product.fields;
@@ -34,6 +39,7 @@ function displayProducts(products) {
   });
 }
 
+// Display cached fallback products when API is unavailable
 function displayFallbackProducts() {
   const fallback = [
     {
@@ -65,12 +71,14 @@ function displayFallbackProducts() {
 
   const container = document.querySelector("#product-container");
   container.innerHTML = "";
+  clearError();
 
   fallback.forEach(({ name, price, image }) => {
     renderCard(container, name, price, image);
   });
 }
 
+// Render individual product card
 function renderCard(container, name, price, imageUrl) {
   const card = document.createElement("article");
   card.classList.add("product-card");
@@ -86,9 +94,25 @@ function renderCard(container, name, price, imageUrl) {
   container.appendChild(card);
 }
 
-function handleError(error) {
-  console.error(`An error occurred: ${error.message}`);
+// UI Helper: Show/hide loading spinner
+function showLoading(show) {
+  const loading = document.querySelector("#loading");
+  loading.style.display = show ? "flex" : "none";
 }
 
-fetchProductsThen();
-fetchProductsAsync();
+// UI Helper: Display error message
+function showError(message) {
+  const errorElement = document.querySelector("#error-message");
+  errorElement.textContent = message;
+  errorElement.style.display = "block";
+}
+
+// UI Helper: Clear error message
+function clearError() {
+  const errorElement = document.querySelector("#error-message");
+  errorElement.textContent = "";
+  errorElement.style.display = "none";
+}
+
+// Initialize app
+fetchProducts();
