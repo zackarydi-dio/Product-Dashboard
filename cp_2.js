@@ -1,17 +1,30 @@
+// ========================================
+// PRODUCT DASHBOARD - MAIN APPLICATION
+// ========================================
+// This module manages product fetching, rendering, and UI state
+// for a dynamic product grid with fallback caching and error handling.
+
 const API_URL = "https://www.course-api.com/javascript-store-products";
 
-// Initialize app with curated product data
+/**
+ * Initializes the app by fetching products from the API
+ * or displaying fallback products if unavailable.
+ */
 function fetchProducts() {
   showLoading(true);
 
-  // Display curated fallback products with realistic pricing
+  // Simulate API call delay for better UX and display fallback products
   setTimeout(() => {
     displayFallbackProducts();
     showLoading(false);
   }, 300);
 }
 
-// Display products from API in grid
+/**
+ * Renders products fetched from the API.
+ * Limits display to first 5 products and formats pricing.
+ * @param {Array} products - Array of product objects from API
+ */
 function displayProducts(products) {
   const container = document.querySelector("#product-container");
   container.innerHTML = "";
@@ -22,6 +35,7 @@ function displayProducts(products) {
     return;
   }
 
+  // Display only first 5 products with formatted pricing
   products.slice(0, 5).forEach((product) => {
     const { name, price, image } = product.fields;
     const formattedPrice = `$${(price / 100).toFixed(2)}`;
@@ -29,7 +43,10 @@ function displayProducts(products) {
   });
 }
 
-// Display cached fallback products when API is unavailable
+/**
+ * Displays cached fallback products when API is unavailable.
+ * Provides graceful degradation with realistic furniture product data.
+ */
 function displayFallbackProducts() {
   const fallback = [
     {
@@ -63,12 +80,19 @@ function displayFallbackProducts() {
   container.innerHTML = "";
   clearError();
 
+  // Render each fallback product to the DOM
   fallback.forEach(({ name, price, image }) => {
     renderCard(container, name, price, image);
   });
 }
 
-// Render individual product card
+/**
+ * Creates and appends a product card element to the DOM.
+ * @param {HTMLElement} container - Target container for the card
+ * @param {string} name - Product name
+ * @param {string} price - Formatted price string
+ * @param {string} imageUrl - Product image URL
+ */
 function renderCard(container, name, price, imageUrl) {
   const card = document.createElement("article");
   card.classList.add("product-card");
@@ -84,25 +108,39 @@ function renderCard(container, name, price, imageUrl) {
   container.appendChild(card);
 }
 
-// UI Helper: Show/hide loading spinner
+// ========================================
+// UI HELPER FUNCTIONS
+// ========================================
+
+/**
+ * Toggles the visibility of the loading spinner.
+ * @param {boolean} show - True to display spinner, false to hide
+ */
 function showLoading(show) {
   const loading = document.querySelector("#loading");
   loading.style.display = show ? "flex" : "none";
 }
 
-// UI Helper: Display error message
+/**
+ * Displays an error message to the user.
+ * @param {string} message - Error message to display
+ */
 function showError(message) {
   const errorElement = document.querySelector("#error-message");
   errorElement.textContent = message;
   errorElement.style.display = "block";
 }
 
-// UI Helper: Clear error message
+/**
+ * Clears any displayed error message from the UI.
+ */
 function clearError() {
   const errorElement = document.querySelector("#error-message");
   errorElement.textContent = "";
   errorElement.style.display = "none";
 }
 
-// Initialize app
+// ========================================
+// APPLICATION INITIALIZATION
+// ========================================
 fetchProducts();
