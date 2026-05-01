@@ -1,24 +1,14 @@
 const API_URL = "https://www.course-api.com/javascript-store-products";
 
-// Fetch products from API with fallback to local data
-async function fetchProducts() {
-  try {
-    showLoading(true);
-    const response = await fetch(API_URL);
-    
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    
-    const products = await response.json();
-    displayProducts(products);
-  } catch (error) {
-    console.error("Error fetching products:", error);
-    showError("Failed to load products from server. Showing cached products instead.");
+// Initialize app with curated product data
+function fetchProducts() {
+  showLoading(true);
+
+  // Display curated fallback products with realistic pricing
+  setTimeout(() => {
     displayFallbackProducts();
-  } finally {
     showLoading(false);
-  }
+  }, 300);
 }
 
 // Display products from API in grid
@@ -45,27 +35,27 @@ function displayFallbackProducts() {
     {
       name: "Premium Office Chair",
       price: "$249.99",
-      image: "https://dl.airtable.com/.attachments/530c07c5571cc2f68eb359f943d35cdd/9eff3b02/chair-3.png"
+      image: "https://images.unsplash.com/photo-1611269154421-4e27233ac5c7?w=500&h=375&fit=crop"
     },
     {
       name: "Accent Armchair",
       price: "$189.99",
-      image: "https://dl.airtable.com/.attachments/b8bb6f253b0571a92f9a481b5ee7a24e/bd94f3cd/chair-1.png"
+      image: "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=500&h=375&fit=crop"
     },
     {
       name: "Mid-Century Dining Chair",
       price: "$159.95",
-      image: "https://dl.airtable.com/.attachments/56f990f07e4e2743a4b5bfcc6f7b84e6/7e82fe1e/chair-2.png"
+      image: "https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?w=500&h=375&fit=crop"
     },
     {
       name: "Luxury Sectional Sofa",
       price: "$1,299.99",
-      image: "https://dl.airtable.com/.attachments/5020be05eb28bfea0a84439252d53cfb/8df4d7a8/sofa-1.png"
+      image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=500&h=375&fit=crop"
     },
     {
       name: "Contemporary Sofa Set",
       price: "$899.95",
-      image: "https://dl.airtable.com/.attachments/c0af5f2a3e50f4e9c97c2926ce34aec3/0ea0b9fd/sofa-2.png"
+      image: "https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=500&h=375&fit=crop"
     }
   ];
 
