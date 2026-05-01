@@ -43,28 +43,28 @@ function displayProducts(products) {
 function displayFallbackProducts() {
   const fallback = [
     {
-      name: "High Back Chair",
-      price: "$109.95",
+      name: "Premium Office Chair",
+      price: "$249.99",
       image: "https://dl.airtable.com/.attachments/530c07c5571cc2f68eb359f943d35cdd/9eff3b02/chair-3.png"
     },
     {
-      name: "Accent Chair",
-      price: "$129.99",
+      name: "Accent Armchair",
+      price: "$189.99",
       image: "https://dl.airtable.com/.attachments/b8bb6f253b0571a92f9a481b5ee7a24e/bd94f3cd/chair-1.png"
     },
     {
-      name: "Wooden Chair",
-      price: "$89.95",
+      name: "Mid-Century Dining Chair",
+      price: "$159.95",
       image: "https://dl.airtable.com/.attachments/56f990f07e4e2743a4b5bfcc6f7b84e6/7e82fe1e/chair-2.png"
     },
     {
-      name: "Classic Sofa",
-      price: "$299.99",
+      name: "Luxury Sectional Sofa",
+      price: "$1,299.99",
       image: "https://dl.airtable.com/.attachments/5020be05eb28bfea0a84439252d53cfb/8df4d7a8/sofa-1.png"
     },
     {
-      name: "Modern Sofa",
-      price: "$349.95",
+      name: "Contemporary Sofa Set",
+      price: "$899.95",
       image: "https://dl.airtable.com/.attachments/c0af5f2a3e50f4e9c97c2926ce34aec3/0ea0b9fd/sofa-2.png"
     }
   ];
